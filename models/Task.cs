@@ -15,8 +15,9 @@ namespace entity_framework_minimal_example.models
         [MaxLength(200)]
         public string Title { get; set; }
         public string Description { get; set; }
-        public int MyProperty { get; set; }
         public Priority TaskPriority { get; set; }
+        public DateTime CreateDate { get; set; }
+        public virtual CategoryModel Category { get; set; }
 
         [NotMapped]
         public string Resume { get; set; }
