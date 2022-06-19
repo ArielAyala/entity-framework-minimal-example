@@ -8,6 +8,6 @@ namespace entity_framework_minimal_example
         public EfMainContext(DbContextOptions options) : base(options) { }
 
         public DbSet<CategoryModel> Categories { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; }
     }
 }
