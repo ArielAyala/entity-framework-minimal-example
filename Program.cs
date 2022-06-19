@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<EfMainContext>(p=> p.UseInMemoryDatabase("EFMinimalExampleDB"));
+//builder.Services.AddDbContext<EfMainContext>(p=> p.UseInMemoryDatabase("EFMinimalExampleDB"));
+builder.Services.AddSqlServer<EfMainContext>(builder.Configuration.GetConnectionString("EfMinimalExampleConnection"));
 
 var app = builder.Build();
 
@@ -13,7 +14,7 @@ app.MapGet("/", () => "Hello World!");
 app.MapGet("/dbconexion", async ([FromServices] EfMainContext dbContext) =>
 {
     dbContext.Database.EnsureCreated();
-    return Results.Ok("Database created in memory " + dbContext.Database.IsInMemory());
+    return Results.Ok("Database created in memory: " + dbContext.Database.IsInMemory());
 });
 
 app.Run();
