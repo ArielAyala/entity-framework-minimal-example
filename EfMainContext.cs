@@ -17,6 +17,7 @@ namespace entity_framework_minimal_example
                 category.HasKey(c => c.CategoryId);
                 category.Property(c => c.Name).HasMaxLength(150).IsRequired();
                 category.Property(c => c.Description).HasMaxLength(500);
+                category.Property(c => c.Weight);
             });
 
             modelBuilder.Entity<TaskModel>(task => {
