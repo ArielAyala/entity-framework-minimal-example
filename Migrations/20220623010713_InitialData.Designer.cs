@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using entity_framework_minimal_example;
 
@@ -11,9 +12,10 @@ using entity_framework_minimal_example;
 namespace entity_framework_minimal_example.Migrations
 {
     [DbContext(typeof(EfMainContext))]
-    partial class EfMainContextModelSnapshot : ModelSnapshot
+    [Migration("20220623010713_InitialData")]
+    partial class InitialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
