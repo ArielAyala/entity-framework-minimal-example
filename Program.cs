@@ -28,6 +28,17 @@ app.MapGet("/api/task/{taskId}", async ([FromServices] EfMainContext dbContext, 
     return Results.Ok(dbContext.Tasks.Include( x => x.Category).Where(x => x.TaskId == taskId));
 });
 
+app.MapPost("/api/tasks", async ([FromServices] EfMainContext dbContext, [FromBody] TaskModel task) =>
+{
+    task.TaskId = Guid.NewGuid();
+    task.CreateDate = DateTime.Now;
+    await dbContext.AddAsync(task);
+    //await dbContext.Tasks.AddAsync(task);
+
+    await dbContext.SaveChangesAsync();
+    return Results.Ok();
+});
+
 
 
 
