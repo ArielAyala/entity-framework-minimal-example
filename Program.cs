@@ -20,12 +20,12 @@ app.MapGet("/dbconexion", async ([FromServices] EfMainContext dbContext) =>
 
 app.MapGet("/api/tasks", async ([FromServices] EfMainContext dbContext) =>
 {
-    return Results.Ok(dbContext.Tasks.Include( x => x.Category));
+    return Results.Ok(dbContext.Tasks.Include(x => x.Category));
 });
 
 app.MapGet("/api/task/{taskId}", async ([FromServices] EfMainContext dbContext, Guid taskId) =>
 {
-    return Results.Ok(dbContext.Tasks.Include( x => x.Category).Where(x => x.TaskId == taskId));
+    return Results.Ok(dbContext.Tasks.Include(x => x.Category).Where(x => x.TaskId == taskId));
 });
 
 app.MapPost("/api/tasks", async ([FromServices] EfMainContext dbContext, [FromBody] TaskModel task) =>
@@ -37,6 +37,24 @@ app.MapPost("/api/tasks", async ([FromServices] EfMainContext dbContext, [FromBo
 
     await dbContext.SaveChangesAsync();
     return Results.Ok();
+});
+
+app.MapPut("/api/tasks/{taskId}", async ([FromServices] EfMainContext dbContext, [FromBody] TaskModel task, [FromRoute] Guid taskid) =>
+{
+    var taskFound = dbContext.Tasks.Find(taskid);
+    if (taskFound != null)
+    {
+        taskFound.CategoryId = task.CategoryId;
+        taskFound.Title = task.Title;
+        taskFound.TaskPriority = task.TaskPriority;
+        taskFound.Description = task.Description;
+
+        await dbContext.SaveChangesAsync();
+        return Results.Ok();
+    }
+
+
+    return Results.NotFound();
 });
 
 
